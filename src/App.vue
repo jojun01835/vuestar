@@ -4,17 +4,18 @@
       <li>Cancel</li>
     </ul>
     <ul class="header-button-right">
-      <li>Next</li>
+      <li @click="step++" v-if="step == 1">Next</li>
+      <li @click="publish" v-if="step == 2">Send</li>
     </ul>
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <Container :data="data" />
+  <Container :data="data" :step="step" :url="url" @write="write = $event" />
   <button @click="more">More</button>
 
   <div class="footer">
     <ul class="footer-button-plus">
-      <input type="file" id="file" class="inputfile" />
+      <input @change="upload" type="file" id="file" class="inputfile" />
       <label for="file" class="input-plus">+</label>
     </ul>
   </div>
@@ -31,6 +32,10 @@ export default {
   data() {
     return {
       data,
+      click: 0,
+      step: 0,
+      url: "",
+      write: "",
     };
   },
   components: {
@@ -38,9 +43,30 @@ export default {
   },
   methods: {
     more() {
-      axios.get(" https://codingapple1.github.io/vue/more0.json").then((result) => {
+      axios.get(`https://codingapple1.github.io/vue/more${this.click}.json`).then((result) => {
         this.data.push(result.data);
+        this.click++;
       });
+    },
+    upload(e) {
+      let a = e.target.files;
+      let url = URL.createObjectURL(a[0]);
+      this.url = url;
+      this.step = 1;
+    },
+    publish() {
+      let newPost = {
+        name: "Kim Hyun",
+        userImage: "https://picsum.photos/100?random=3",
+        postImage: this.url,
+        likes: 36,
+        date: "May 15",
+        liked: false,
+        content: this.write,
+        filter: "perpetua",
+      };
+      this.data.unshift(newPost);
+      this.step = 0;
     },
   },
 };
