@@ -10,7 +10,7 @@
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <Container :data="data" :step="step" :url="url" @write="write = $event" />
+  <Container :data="data" :step="step" :url="url" @write="write = $event" :filter2="filter" />
   <button @click="more">More</button>
 
   <div class="footer">
@@ -36,7 +36,13 @@ export default {
       step: 0,
       url: "",
       write: "",
+      filter: "",
     };
+  },
+  mounted() {
+    this.emitter.on("filter2", (filter2) => {
+      this.filter = filter2;
+    });
   },
   components: {
     Container,
@@ -63,7 +69,7 @@ export default {
         date: "May 15",
         liked: false,
         content: this.write,
-        filter: "perpetua",
+        filter: this.filter,
       };
       this.data.unshift(newPost);
       this.step = 0;

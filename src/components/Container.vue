@@ -3,14 +3,16 @@
     <Post :data="data" v-if="step == 0" />
     <!-- 필터선택페이지 -->
     <div v-if="step == 1">
-      <div class="upload-image" :style="`background-image:url(${url})`"></div>
+      <div :class="filter2" class="upload-image" :style="`background-image:url(${url})`"></div>
       <div class="filters">
-        <FilterBox :url="url" v-for="a in filter" :key="{ a }" :filter="a"></FilterBox>
+        <FilterBox :url="url" v-for="a in filter" :key="{ a }" :filter="a">
+          <p>{{ a }}</p>
+        </FilterBox>
       </div>
     </div>
     <!-- 글작성페이지 -->
     <div v-if="step == 2">
-      <div class="upload-image" :style="`background-image:url(${url})`"></div>
+      <div :class="filter2" class="upload-image" :style="`background-image:url(${url})`"></div>
       <div class="write">
         <textarea class="write-box" @input="$emit('write', $event.target.value)">write!</textarea>
       </div>
@@ -58,6 +60,7 @@ export default {
     data: Object,
     step: Number,
     url: String,
+    filter2: String,
   },
   components: {
     Post,
