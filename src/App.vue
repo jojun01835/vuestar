@@ -11,8 +11,6 @@
   </div>
 
   <Container :data="data" :step="step" :url="url" @write="write = $event" :filter2="filter" />
-  <button @click="more">More</button>
-
   <div class="footer">
     <ul class="footer-button-plus">
       <input @change="upload" type="file" id="file" class="inputfile" />
@@ -33,7 +31,7 @@ export default {
     return {
       data,
       click: 0,
-      step: 0,
+      step: 3,
       url: "",
       write: "",
       filter: "",
@@ -47,6 +45,7 @@ export default {
   components: {
     Container,
   },
+  computed: {},
   methods: {
     more() {
       axios.get(`https://codingapple1.github.io/vue/more${this.click}.json`).then((result) => {

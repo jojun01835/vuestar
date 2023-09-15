@@ -1,12 +1,12 @@
 <template>
-  <div class="post" v-for="post in data" :key="post[i]">
+  <div class="post" v-for="(post, i) in data" :key="post[i]">
     <div class="post-header">
       <div class="profile" :style="{ backgroundImage: `url(${post.userImage})` }"></div>
       <span class="profile-name">{{ post.name }}</span>
     </div>
-    <div class="post-body" :style="{ backgroundImage: `url(${post.postImage})` }"></div>
+    <div :class="data.filter" class="post-body" :style="{ backgroundImage: `url(${post.postImage})` }" @click="$store.commit('likes', i)"></div>
     <div class="post-content">
-      <p>{{ post.likes }} likes</p>
+      <p>{{ $store.state.likes[i] }} likes</p>
       <p>
         <strong>{{ post.name }}</strong> {{ post.content }}
       </p>

@@ -17,11 +17,15 @@
         <textarea class="write-box" @input="$emit('write', $event.target.value)">write!</textarea>
       </div>
     </div>
+    <div v-if="step == 3">
+      <MyPage />
+    </div>
   </div>
 </template>
 <script>
 import Post from "./Post.vue";
 import FilterBox from "./FilterBox.vue";
+import MyPage from "./MyPage.vue";
 export default {
   name: "ContainerView",
   data() {
@@ -65,6 +69,7 @@ export default {
   components: {
     Post,
     FilterBox,
+    MyPage,
   },
 };
 </script>
